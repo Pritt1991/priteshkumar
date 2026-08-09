@@ -66,13 +66,15 @@ export async function getArticles() {
       const cleanTitle = titleText.replace(/\*\*/g, '').trim();
 
       const featuredImgFile = props['Featured Image']?.files?.[0] || props.Image?.files?.[0];
-      const imgUrl = (
-        page.cover?.external?.url ||
-        featuredImgFile?.external?.url ||
-        featuredImgFile?.file?.url ||
-        page.cover?.file?.url ||
-        null
-      );
+      const candidateUrls = [
+        page.cover?.external?.url,
+        featuredImgFile?.external?.url,
+        page.cover?.file?.url,
+        featuredImgFile?.file?.url,
+      ].filter(Boolean);
+
+      const permanentUrl = candidateUrls.find(url => !url.includes('prod-files-secure.s3.us-west-2.amazonaws.com'));
+      const imgUrl = permanentUrl || candidateUrls[0] || null;
 
       const rawSlug = slugify(cleanTitle || 'untitled');
 
