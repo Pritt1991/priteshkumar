@@ -7,7 +7,7 @@ export const site = {
   author: {
     name: 'Pritesh Kumar',
     email: 'priteshkumar@outlook.com',
-    linkedin: 'https://linkedin.com/in/priteshkumar',
+    linkedin: 'https://www.linkedin.com/in/priteshkumar/',
     whatsapp: 'https://wa.me/919540683098',
     whatsappNumber: '+91 95406 83098',
   },
