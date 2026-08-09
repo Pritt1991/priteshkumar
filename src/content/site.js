@@ -1,7 +1,7 @@
 export const site = {
   name: 'Pritesh Kumar',
   title: 'AVP-IT | Cybersecurity & Cloud',
-  tagline: 'IT Infrastructure · Security · Cloud',
+  tagline: 'IT Infrastructure · Network · Security · Cloud',
   url: 'https://priteshkumar.com',
   description: 'IT Infrastructure, Security and Cloud professional. Building, securing and operating enterprise technology environments.',
   author: {
