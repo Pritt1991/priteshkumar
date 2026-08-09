@@ -63,16 +63,17 @@ export async function getArticles() {
       // Find title property dynamically
       const titlePropKey = Object.keys(props).find(key => props[key].type === 'title') || 'Title';
       const titleText = richTextToPlain(props[titlePropKey]?.title);
+      const cleanTitle = titleText.replace(/\*\*/g, '').trim();
 
       const featuredImgFile = props['Featured Image']?.files?.[0] || props.Image?.files?.[0];
       const imgUrl = featuredImgFile?.file?.url || featuredImgFile?.external?.url || null;
 
-      const rawSlug = slugify(titleText || 'untitled');
+      const rawSlug = slugify(cleanTitle || 'untitled');
 
       return {
         id: page.id,
         slug: rawSlug || page.id,
-        title: titleText || 'Untitled Article',
+        title: cleanTitle || 'Untitled Article',
         excerpt: richTextToPlain(props.Excerpt?.rich_text || props.Description?.rich_text),
         category: props.Category?.select?.name || props.Category?.status?.name || 'Uncategorized',
         tags: props.Tags?.multi_select?.map(t => t.name) || [],
