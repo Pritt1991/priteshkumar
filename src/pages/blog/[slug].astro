@@ -217,11 +217,11 @@ const headings = notionBlocks.filter(b => b.type.startsWith('heading_'));
 
       <!-- Featured Image -->
       {article.featuredImage && (
-        <div class="aspect-[21/9] bg-primary-200 dark:bg-primary-800 rounded-2xl mb-12 overflow-hidden border border-primary-200/60 dark:border-primary-800/60 shadow-xl">
+        <div class="w-full rounded-2xl mb-12 overflow-hidden border border-primary-200/60 dark:border-primary-800/60 shadow-xl bg-primary-900/40">
           <img
             src={article.featuredImage}
             alt={article.title}
-            class="w-full h-full object-cover"
+            class="w-full max-h-[650px] h-auto object-contain rounded-2xl mx-auto"
             loading="eager"
           />
         </div>
