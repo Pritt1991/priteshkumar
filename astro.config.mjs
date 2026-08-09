@@ -6,6 +6,9 @@ export default defineConfig({
   site: 'https://priteshkumar.com',
   output: 'static',
   devToolbar: { enabled: false },
+  redirects: {
+    '/blog/-after-14-years-in-it-infrastructure-security-and-cloud-i-finally-built-a-home-for-it-all': '/blog/after-14-years-in-it-infrastructure-security-and-cloud-i-finally-built-a-home-for-it-all',
+  },
   integrations: [
     tailwind(),
     sitemap({
