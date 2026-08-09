@@ -66,7 +66,13 @@ export async function getArticles() {
       const cleanTitle = titleText.replace(/\*\*/g, '').trim();
 
       const featuredImgFile = props['Featured Image']?.files?.[0] || props.Image?.files?.[0];
-      const imgUrl = featuredImgFile?.file?.url || featuredImgFile?.external?.url || null;
+      const imgUrl = (
+        featuredImgFile?.file?.url ||
+        featuredImgFile?.external?.url ||
+        page.cover?.file?.url ||
+        page.cover?.external?.url ||
+        null
+      );
 
       const rawSlug = slugify(cleanTitle || 'untitled');
 
