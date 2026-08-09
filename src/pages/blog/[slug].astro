@@ -22,7 +22,7 @@ const notionBlocks = await getArticleContent(article.id);
 const readingTime = estimateReadingTime(article.excerpt);
 
 // Build canonical URL
-const canonicalURL = new URL(`/blog/${slug}`, Astro.site || site.url);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://priteshkumar.com');
 
 // Get related articles (same category, excluding current)
 const allArticles = await getArticles();
