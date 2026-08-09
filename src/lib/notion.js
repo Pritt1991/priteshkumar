@@ -67,10 +67,10 @@ export async function getArticles() {
 
       const featuredImgFile = props['Featured Image']?.files?.[0] || props.Image?.files?.[0];
       const imgUrl = (
-        featuredImgFile?.file?.url ||
-        featuredImgFile?.external?.url ||
-        page.cover?.file?.url ||
         page.cover?.external?.url ||
+        featuredImgFile?.external?.url ||
+        featuredImgFile?.file?.url ||
+        page.cover?.file?.url ||
         null
       );
 
