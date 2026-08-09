@@ -1,0 +1,202 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getArticles } from '../../lib/cms.js';
+import { categories } from '../../content/site.js';
+import { formatDate } from '../../lib/utils.js';
+
+const allArticles = await getArticles();
+const featured = allArticles[0] || null;
+const latest = allArticles.slice(1);
+---
+
+<Layout title="Blog" description="Practical Technology. Infrastructure. Security. Cloud.">
+  <Nav />
+  <main class="max-w-6xl mx-auto px-6 py-12 pt-28 flex-1">
+    <!-- Header -->
+    <div class="mb-14">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/10 border border-accent-500/20 text-accent-400 font-mono text-xs font-semibold uppercase tracking-wider mb-4">
+        <span>📰</span> Engineering Insights
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900 dark:text-primary-100 mb-4">
+        Technical <span class="bg-gradient-to-r from-accent-400 via-cyan-400 to-accent-600 bg-clip-text text-transparent">Articles & Writing</span>
+      </h1>
+      <p class="text-lg text-primary-600 dark:text-primary-400">Practical Technology. Infrastructure. Security. Cloud.</p>
+    </div>
+
+    {allArticles.length === 0 ? (
+      <!-- Empty state -->
+      <div class="text-center py-24 bg-primary-100/50 dark:bg-primary-900/30 border border-primary-200/50 dark:border-primary-800/50 rounded-2xl backdrop-blur-md">
+        <p class="text-2xl font-light text-primary-500 dark:text-primary-400 mb-2">No articles published yet.</p>
+        <p class="text-sm font-mono text-accent-400">Check back soon — fresh engineering content is on the way.</p>
+      </div>
+    ) : (
+      <>
+        <!-- Search & Filters -->
+        <div class="mb-12 space-y-5">
+          <div class="relative">
+            <input
+              type="text"
+              id="search"
+              placeholder="Search articles by title, content, or tag..."
+              class="w-full px-5 py-3.5 pl-12 bg-primary-100/60 dark:bg-primary-900/40 border border-primary-200/60 dark:border-primary-800/60 backdrop-blur-md rounded-xl text-sm text-primary-900 dark:text-primary-100 placeholder-primary-400 focus:outline-none focus:border-accent-400/80 focus:ring-2 focus:ring-accent-400/20 transition-all"
+            />
+            <svg class="w-5 h-5 text-accent-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+          
+          <div class="flex flex-wrap gap-2" id="category-filters">
+            {categories.map((cat, i) => (
+              <button
+                data-category={cat}
+                class:list={[
+                  'px-3.5 py-1.5 font-mono text-xs font-semibold rounded-lg transition-all duration-300',
+                  i === 0
+                    ? 'bg-accent-500 text-white shadow-md shadow-accent-500/20'
+                    : 'bg-primary-100/50 dark:bg-primary-900/40 border border-primary-200/60 dark:border-primary-800/60 text-primary-600 dark:text-primary-400 hover:border-accent-400/50 hover:text-accent-400'
+                ]}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Featured Article -->
+        {featured && (
+          <div class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="h-px w-6 bg-accent-500"></div>
+              <h2 class="text-xs font-mono font-bold text-accent-400 tracking-widest uppercase">Featured Article</h2>
+            </div>
+            
+            <article class="bg-primary-100/60 dark:bg-primary-900/40 border border-primary-200/60 dark:border-primary-800/60 backdrop-blur-md rounded-2xl p-6 md:p-8 hover:border-accent-400/50 hover:shadow-2xl hover:shadow-accent-500/5 transition-all duration-500 group cursor-pointer grid grid-cols-1 md:grid-cols-12 gap-8 items-center" onclick={`window.location.href='/blog/${featured.slug}'`}>
+              <div class="md:col-span-6 aspect-[16/10] bg-primary-200 dark:bg-primary-800 rounded-xl overflow-hidden relative">
+                {featured.featuredImage ? (
+                  <img
+                    src={featured.featuredImage}
+                    alt={featured.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-gradient-to-br from-accent-500/20 via-primary-800 to-primary-950 group-hover:scale-105 transition-transform duration-700 flex items-center justify-center">
+                    <span class="font-mono text-xs text-accent-400 font-bold">Pritesh Kumar · Featured</span>
+                  </div>
+                )}
+              </div>
+              <div class="md:col-span-6">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="font-mono text-xs font-semibold text-accent-400 bg-accent-500/10 border border-accent-500/20 px-2.5 py-0.5 rounded-full">
+                    {featured.category || 'Article'}
+                  </span>
+                  <span class="font-mono text-xs text-primary-500 dark:text-primary-400">
+                    {formatDate(featured.publishDate)}
+                  </span>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-primary-900 dark:text-primary-100 mb-4 group-hover:text-accent-400 transition-colors leading-snug">
+                  {featured.title}
+                </h2>
+                <p class="text-primary-600 dark:text-primary-300 leading-relaxed mb-6 line-clamp-3">{featured.excerpt}</p>
+                <div class="inline-flex items-center gap-2 font-mono text-xs font-bold text-accent-400 group-hover:translate-x-1 transition-transform">
+                  Read Article <span>→</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        )}
+
+        <!-- Latest Articles Grid -->
+        {latest.length > 0 && (
+          <div>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="h-px w-6 bg-accent-500"></div>
+              <h2 class="text-xs font-mono font-bold text-accent-400 tracking-widest uppercase">Latest Articles</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="articles-list">
+              {latest.map(article => (
+                <article class="bg-primary-100/60 dark:bg-primary-900/40 border border-primary-200/60 dark:border-primary-800/60 backdrop-blur-md rounded-2xl p-6 hover:border-accent-400/50 hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col justify-between" onclick={`window.location.href='/blog/${article.slug}'`}>
+                  <div>
+                    <div class="aspect-[16/10] bg-primary-200 dark:bg-primary-800 rounded-xl mb-5 overflow-hidden relative">
+                      {article.featuredImage ? (
+                        <img
+                          src={article.featuredImage}
+                          alt={article.title}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div class="w-full h-full bg-gradient-to-br from-primary-800 to-primary-950 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                          <span class="font-mono text-xs text-primary-400">Engineering Blog</span>
+                        </div>
+                      )}
+                    </div>
+                    <div class="flex items-center gap-3 mb-3">
+                      <span class="font-mono text-xs font-semibold text-accent-400 bg-accent-500/10 border border-accent-500/20 px-2.5 py-0.5 rounded-full">
+                        {article.category || 'Article'}
+                      </span>
+                      <span class="font-mono text-xs text-primary-500 dark:text-primary-400">
+                        {formatDate(article.publishDate)}
+                      </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary-900 dark:text-primary-100 mb-3 group-hover:text-accent-400 transition-colors leading-snug">
+                      {article.title}
+                    </h3>
+                    <p class="text-primary-600 dark:text-primary-400 text-sm leading-relaxed line-clamp-3 mb-4">{article.excerpt}</p>
+                  </div>
+                  <div class="inline-flex items-center gap-2 font-mono text-xs font-bold text-accent-400 group-hover:translate-x-1 transition-transform">
+                    Read Story <span>→</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+      </>
+    )}
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const searchInput = document.getElementById('search') as HTMLInputElement;
+  const articlesList = document.getElementById('articles-list');
+  const categoryButtons = document.querySelectorAll('#category-filters button');
+  let activeCategory = 'All';
+
+  function filterArticles() {
+    if (!articlesList) return;
+    const query = searchInput.value.toLowerCase();
+    const articles = articlesList.querySelectorAll('article');
+
+    articles.forEach(article => {
+      const title = article.querySelector('h3')?.textContent?.toLowerCase() || '';
+      const excerpt = article.querySelector('p')?.textContent?.toLowerCase() || '';
+      const category = article.querySelector('.font-mono')?.textContent?.trim() || '';
+
+      const matchesSearch = title.includes(query) || excerpt.includes(query);
+      const matchesCategory = activeCategory === 'All' || category === activeCategory;
+
+      article.style.display = matchesSearch && matchesCategory ? '' : 'none';
+    });
+  }
+
+  categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      categoryButtons.forEach(b => {
+        b.classList.remove('bg-accent-500', 'text-white', 'shadow-md', 'shadow-accent-500/20');
+        b.classList.add('bg-primary-100/50', 'dark:bg-primary-900/40', 'border', 'border-primary-200/60', 'dark:border-primary-800/60', 'text-primary-600', 'dark:text-primary-400');
+      });
+      btn.classList.remove('bg-primary-100/50', 'dark:bg-primary-900/40', 'border', 'border-primary-200/60', 'dark:border-primary-800/60', 'text-primary-600', 'dark:text-primary-400');
+      btn.classList.add('bg-accent-500', 'text-white', 'shadow-md', 'shadow-accent-500/20');
+
+      activeCategory = (btn as HTMLElement).dataset.category || 'All';
+      filterArticles();
+    });
+  });
+
+  searchInput?.addEventListener('input', filterArticles);
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://priteshkumar.com/sitemap-index.xml
