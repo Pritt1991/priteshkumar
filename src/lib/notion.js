@@ -22,46 +22,56 @@ export async function getArticleContent(pageId) {
       cursor = response.next_cursor;
     } while (cursor);
   } catch (err) {
-    console.error('Error fetching block content:', err);
+    console.error('Error fetching block content for pageId', pageId, err);
   }
   return blocks;
 }
 
 export async function getArticles() {
-  if (!import.meta.env.NOTION_TOKEN || !DATABASE_ID) {
-    console.warn('NOTION_TOKEN or NOTION_DATABASE_ID missing');
+  const token = import.meta.env.NOTION_TOKEN;
+  const dbId = import.meta.env.NOTION_DATABASE_ID;
+
+  if (!token || !dbId) {
+    console.warn('NOTION_TOKEN or NOTION_DATABASE_ID is missing from environment variables');
     return [];
   }
 
   try {
+    console.log(`Querying Notion Database ID: ${dbId.slice(0, 6)}...`);
     const response = await notion.databases.query({
-      database_id: DATABASE_ID,
+      database_id: dbId.trim(),
     });
+
+    console.log(`Notion returned ${response.results.length} total pages in database.`);
 
     const publishedArticles = response.results.filter(page => {
       const props = page.properties;
       const statusValue = (
-        props.Status?.select?.name ||
         props.Status?.status?.name ||
+        props.Status?.select?.name ||
         (props.Status?.checkbox ? 'Published' : null) ||
-        'Published' // default to include if Status property isn't defined
+        'Published'
       );
       return statusValue.toLowerCase() === 'published';
     });
 
+    console.log(`Found ${publishedArticles.length} published articles.`);
+
     return publishedArticles.map(page => {
       const props = page.properties;
 
-      // Find title property dynamically if Title/Name key differs
+      // Find title property dynamically
       const titlePropKey = Object.keys(props).find(key => props[key].type === 'title') || 'Title';
       const titleText = richTextToPlain(props[titlePropKey]?.title);
 
       const featuredImgFile = props['Featured Image']?.files?.[0] || props.Image?.files?.[0];
       const imgUrl = featuredImgFile?.file?.url || featuredImgFile?.external?.url || null;
 
+      const rawSlug = slugify(titleText || 'untitled');
+
       return {
         id: page.id,
-        slug: slugify(titleText || 'untitled'),
+        slug: rawSlug || page.id,
         title: titleText || 'Untitled Article',
         excerpt: richTextToPlain(props.Excerpt?.rich_text || props.Description?.rich_text),
         category: props.Category?.select?.name || props.Category?.status?.name || 'Uncategorized',
