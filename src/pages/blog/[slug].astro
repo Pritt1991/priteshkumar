@@ -257,24 +257,7 @@ const headings = notionBlocks.filter(b => b.type.startsWith('heading_'));
         </div>
       )}
 
-      <!-- Table of Contents -->
-      {headings.length > 0 && (
-        <div class="p-6 bg-primary-100/60 dark:bg-primary-900/40 border border-primary-200/60 dark:border-primary-800/60 backdrop-blur-md rounded-2xl mb-10">
-          <h3 class="font-mono text-xs font-bold text-accent-400 uppercase tracking-widest mb-4">Table of Contents</h3>
-          <ul class="space-y-2 text-sm">
-            {headings.map((h) => {
-              const text = h[h.type].rich_text.map(t => t.plain_text).join('');
-              return (
-                <li>
-                  <a href={`#${text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`} class="text-primary-600 dark:text-primary-300 hover:text-accent-400 transition-colors flex items-center gap-2">
-                    <span class="text-accent-400 text-xs">#</span> {text}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
+      <!-- Table of Contents disabled -->
 
       <!-- Content -->
       <div class="prose prose-neutral dark:prose-invert max-w-none leading-relaxed" set:html={html} />
