@@ -70,6 +70,27 @@ const NOTION_COLOR_MAP = {
   red_background: 'bg-red-100 dark:bg-red-900/40 px-1.5 py-0.5 rounded',
 };
 
+const NOTION_EXACT_STYLES = {
+  gray: 'color: #6b7280;',
+  brown: 'color: #b45309;',
+  orange: 'color: #f97316;',
+  yellow: 'color: #d97706;',
+  green: 'color: #059669;',
+  blue: 'color: #0284c7;',
+  purple: 'color: #9333ea;',
+  pink: 'color: #db2777;',
+  red: 'color: #dc2626;',
+  gray_background: 'background-color: rgba(107, 114, 128, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  brown_background: 'background-color: rgba(180, 83, 9, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  orange_background: 'background-color: rgba(249, 115, 22, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  yellow_background: 'background-color: rgba(217, 119, 6, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  green_background: 'background-color: rgba(5, 150, 105, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  blue_background: 'background-color: rgba(2, 132, 199, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  purple_background: 'background-color: rgba(147, 51, 234, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  pink_background: 'background-color: rgba(219, 39, 119, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+  red_background: 'background-color: rgba(220, 38, 38, 0.2); padding: 0.125rem 0.375rem; border-radius: 0.25rem;',
+};
+
 function renderRichText(richTextArray) {
   if (!richTextArray || !Array.isArray(richTextArray)) return '';
   return richTextArray
@@ -94,8 +115,9 @@ function renderRichText(richTextArray) {
       }
       if (annotations.color && annotations.color !== 'default') {
         const colorClass = NOTION_COLOR_MAP[annotations.color] || '';
-        if (colorClass) {
-          content = `<span class="${colorClass}">${content}</span>`;
+        const styleRule = NOTION_EXACT_STYLES[annotations.color] || '';
+        if (colorClass || styleRule) {
+          content = `<span class="${colorClass}" style="${styleRule}">${content}</span>`;
         }
       }
 
