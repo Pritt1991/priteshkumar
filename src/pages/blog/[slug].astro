@@ -46,6 +46,30 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+const NOTION_COLOR_MAP = {
+  // Text colors
+  gray: 'text-gray-500 dark:text-gray-400',
+  brown: 'text-amber-700 dark:text-amber-500',
+  orange: 'text-orange-500 dark:text-orange-400',
+  yellow: 'text-yellow-600 dark:text-yellow-400',
+  green: 'text-emerald-600 dark:text-emerald-400',
+  blue: 'text-sky-500 dark:text-sky-400 font-semibold',
+  purple: 'text-purple-500 dark:text-purple-400',
+  pink: 'text-pink-500 dark:text-pink-400',
+  red: 'text-red-500 dark:text-red-400',
+
+  // Background highlights
+  gray_background: 'bg-gray-200 dark:bg-gray-800 px-1.5 py-0.5 rounded',
+  brown_background: 'bg-amber-100 dark:bg-amber-900/40 px-1.5 py-0.5 rounded',
+  orange_background: 'bg-orange-100 dark:bg-orange-900/40 px-1.5 py-0.5 rounded',
+  yellow_background: 'bg-yellow-100 dark:bg-yellow-900/40 px-1.5 py-0.5 rounded',
+  green_background: 'bg-emerald-100 dark:bg-emerald-900/40 px-1.5 py-0.5 rounded',
+  blue_background: 'bg-sky-100 dark:bg-sky-900/40 px-1.5 py-0.5 rounded',
+  purple_background: 'bg-purple-100 dark:bg-purple-900/40 px-1.5 py-0.5 rounded',
+  pink_background: 'bg-pink-100 dark:bg-pink-900/40 px-1.5 py-0.5 rounded',
+  red_background: 'bg-red-100 dark:bg-red-900/40 px-1.5 py-0.5 rounded',
+};
+
 function renderRichText(richTextArray) {
   if (!richTextArray || !Array.isArray(richTextArray)) return '';
   return richTextArray
@@ -67,6 +91,12 @@ function renderRichText(richTextArray) {
       }
       if (annotations.code) {
         content = `<code class="font-mono text-accent-400 bg-accent-500/10 px-1.5 py-0.5 rounded text-sm">${content}</code>`;
+      }
+      if (annotations.color && annotations.color !== 'default') {
+        const colorClass = NOTION_COLOR_MAP[annotations.color] || '';
+        if (colorClass) {
+          content = `<span class="${colorClass}">${content}</span>`;
+        }
       }
 
       const href = rt.href || rt.text?.link?.url;
