@@ -198,9 +198,6 @@ notionBlocks.forEach(block => {
 if (inList) {
   html += listType === 'ul' ? '</ul>' : '</ol>';
 }
-
-// Build table of contents from headings
-const headings = notionBlocks.filter(b => b.type.startsWith('heading_'));
 ---
 
 <Layout
