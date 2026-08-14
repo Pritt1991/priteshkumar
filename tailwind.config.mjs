@@ -2,6 +2,27 @@
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
+  safelist: [
+    'text-gray-500', 'dark:text-gray-400',
+    'text-amber-700', 'dark:text-amber-500',
+    'text-orange-500', 'dark:text-orange-400',
+    'text-yellow-600', 'dark:text-yellow-400',
+    'text-emerald-600', 'dark:text-emerald-400',
+    'text-sky-500', 'dark:text-sky-400',
+    'text-purple-500', 'dark:text-purple-400',
+    'text-pink-500', 'dark:text-pink-400',
+    'text-red-500', 'dark:text-red-400',
+    'bg-gray-200', 'dark:bg-gray-800',
+    'bg-amber-100', 'dark:bg-amber-900/40',
+    'bg-orange-100', 'dark:bg-orange-900/40',
+    'bg-yellow-100', 'dark:bg-yellow-900/40',
+    'bg-emerald-100', 'dark:bg-emerald-900/40',
+    'bg-sky-100', 'dark:bg-sky-900/40',
+    'bg-purple-100', 'dark:bg-purple-900/40',
+    'bg-pink-100', 'dark:bg-pink-900/40',
+    'bg-red-100', 'dark:bg-red-900/40',
+    'px-1.5', 'py-0.5', 'rounded', 'font-semibold',
+  ],
   theme: {
     extend: {
       fontFamily: {
