@@ -19,7 +19,16 @@ const { slug } = Astro.params;
 
 // Fetch full content from Notion
 const notionBlocks = await getArticleContent(article.id);
-const readingTime = estimateReadingTime(article.excerpt);
+
+// Calculate accurate reading time from full article text
+const fullArticleText = notionBlocks
+  .map(b => {
+    const richText = b[b.type]?.rich_text || [];
+    return richText.map(t => t.plain_text).join(' ');
+  })
+  .join(' ');
+
+const readingTime = estimateReadingTime(fullArticleText || article.excerpt || '');
 
 // Build canonical URL
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://priteshkumar.com');
