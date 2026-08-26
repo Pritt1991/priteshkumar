@@ -151,8 +151,39 @@ function renderBlock(block) {
     case 'quote':
       return `<blockquote class="border-l-4 border-accent-500 pl-6 py-3 my-6 text-primary-700 dark:text-primary-200 italic font-mono text-sm bg-accent-500/5 rounded-r-xl">${renderRichText(block.quote?.rich_text)}</blockquote>`;
     case 'callout': {
-      const emoji = block.callout?.icon?.emoji ? `<span class="mr-2">${block.callout.icon.emoji}</span>` : '';
-      return `<div class="p-5 bg-sky-500/10 border border-sky-500/20 rounded-xl my-6 text-primary-800 dark:text-primary-200 flex items-start">${emoji}<div>${renderRichText(block.callout?.rich_text)}</div></div>`;
+      const emoji = block.callout?.icon?.emoji ? `<span class="mr-2.5 text-lg">${block.callout.icon.emoji}</span>` : '';
+      return `<div class="p-5 bg-sky-500/10 border border-sky-500/20 rounded-xl my-6 text-primary-800 dark:text-primary-200 flex items-start">${emoji}<div class="flex-1">${renderRichText(block.callout?.rich_text)}</div></div>`;
+    }
+    case 'divider':
+      return `<hr class="my-10 border-primary-200/60 dark:border-primary-800/60" />`;
+    case 'to_do': {
+      const checked = block.to_do?.checked;
+      const checkIcon = checked
+        ? `<span class="text-emerald-500 font-bold mr-2">✓</span>`
+        : `<span class="text-primary-400 mr-2">☐</span>`;
+      return `<div class="flex items-center my-2 text-primary-700 dark:text-primary-300">${checkIcon}<span class="${checked ? 'line-through opacity-75' : ''}">${renderRichText(block.to_do?.rich_text)}</span></div>`;
+    }
+    case 'toggle':
+      return `
+        <details class="my-4 p-4 bg-primary-100/40 dark:bg-primary-900/30 border border-primary-200/60 dark:border-primary-800/60 rounded-xl">
+          <summary class="font-semibold text-primary-900 dark:text-primary-100 cursor-pointer focus:outline-none mb-2">
+            ${renderRichText(block.toggle?.rich_text)}
+          </summary>
+        </details>
+      `;
+    case 'bookmark':
+    case 'embed': {
+      const url = block.bookmark?.url || block.embed?.url;
+      if (!url) return '';
+      const caption = renderRichText(block.bookmark?.caption || block.embed?.caption);
+      return `
+        <div class="my-6 p-4 bg-primary-100/60 dark:bg-primary-900/40 border border-primary-200/60 dark:border-primary-800/60 rounded-xl backdrop-blur-md">
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="text-sky-500 hover:text-sky-400 font-mono text-sm underline break-all flex items-center gap-2">
+            <span>🔗</span> ${escapeHtml(url)}
+          </a>
+          ${caption ? `<p class="mt-2 text-xs text-primary-500 font-mono">${caption}</p>` : ''}
+        </div>
+      `;
     }
     case 'image': {
       const imgUrl =
@@ -181,8 +212,13 @@ function renderBlock(block) {
         </figure>
       `;
     }
-    default:
+    default: {
+      const richText = block[block.type]?.rich_text;
+      if (richText && Array.isArray(richText) && richText.length > 0) {
+        return `<p class="text-primary-700 dark:text-primary-300 leading-relaxed mb-6">${renderRichText(richText)}</p>`;
+      }
       return '';
+    }
   }
 }
 
