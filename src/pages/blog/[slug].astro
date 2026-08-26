@@ -95,7 +95,7 @@ function renderRichText(richTextArray) {
   if (!richTextArray || !Array.isArray(richTextArray)) return '';
   return richTextArray
     .map(rt => {
-      let content = escapeHtml(rt.plain_text || '');
+      let content = escapeHtml(rt.plain_text || '').replace(/\n/g, '<br />');
       const annotations = rt.annotations || {};
 
       if (annotations.bold) {
