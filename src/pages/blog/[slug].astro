@@ -141,7 +141,7 @@ function renderBlock(block) {
     case 'heading_2':
       return `<h3 class="text-xl sm:text-2xl font-extrabold text-sky-500 dark:text-sky-400 mt-6 mb-2 tracking-tight" style="color: #0284c7 !important;">${renderRichText(block.heading_2?.rich_text)}</h3>`;
     case 'heading_3':
-      return `<h4 class="text-lg sm:text-xl font-bold text-sky-500 dark:text-sky-400 mt-5 mb-1.5 tracking-tight" style="color: #0284c7 !important;">${renderRichText(block.heading_3?.rich_text)}</h4>`;
+      return `<h4 class="text-lg sm:text-xl font-bold text-sky-500 dark:text-sky-400 mt-4 mb-1 tracking-tight" style="color: #0284c7 !important;">${renderRichText(block.heading_3?.rich_text)}</h4>`;
     case 'bulleted_list_item':
       return `<li class="text-primary-700 dark:text-primary-300 leading-relaxed">${renderRichText(block.bulleted_list_item?.rich_text)}</li>`;
     case 'numbered_list_item':
