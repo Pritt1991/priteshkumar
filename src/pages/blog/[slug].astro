@@ -399,12 +399,15 @@ if (inList) {
 
 <style is:global>
   .prose h1, .prose h2, .prose h3, .prose h4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 0.25rem !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 0px !important;
     color: #0284c7 !important;
   }
+  .prose h1 + p, .prose h2 + p, .prose h3 + p, .prose h4 + p {
+    margin-top: 0px !important;
+  }
   .prose p {
-    margin-top: 0 !important;
-    margin-bottom: 0.75rem !important;
+    margin-top: 0px !important;
+    margin-bottom: 0.6rem !important;
   }
 </style>
