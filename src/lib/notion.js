@@ -21,6 +21,13 @@ export async function getArticleContent(pageId) {
       blocks.push(...response.results);
       cursor = response.next_cursor;
     } while (cursor);
+
+    // Fetch child rows for table blocks
+    for (const block of blocks) {
+      if (block.has_children && block.type === 'table') {
+        block.children = await getArticleContent(block.id);
+      }
+    }
   } catch (err) {
     console.error('Error fetching block content for pageId', pageId, err);
   }
