@@ -205,7 +205,7 @@ function cleanExcerpt(excerpt) {
                           type="button"
                           id="seeds-fincap-trigger"
                           onclick="openSeedsModal(this)"
-                          class="font-bold text-primary-900 dark:text-primary-100 text-lg group-hover:text-sky-400 hover:text-sky-400 hover:underline decoration-sky-400/50 transition-colors flex items-center gap-1.5 text-left focus:outline-none focus:ring-2 focus:ring-sky-400/50 rounded-md cursor-pointer"
+                          class="font-sans font-bold text-primary-900 dark:text-primary-100 text-base sm:text-lg group-hover:text-sky-400 hover:text-sky-400 hover:underline decoration-sky-400/50 transition-colors flex items-center gap-1.5 text-left focus:outline-none focus:ring-2 focus:ring-sky-400/50 rounded-md cursor-pointer"
                           aria-haspopup="dialog"
                           aria-controls="seeds-fincap-modal"
                         >
@@ -213,7 +213,7 @@ function cleanExcerpt(excerpt) {
                           <Info class="w-4 h-4 text-sky-400 opacity-80 group-hover:opacity-100 flex-shrink-0" />
                         </button>
                       ) : (
-                        <span class="font-bold text-primary-900 dark:text-primary-100 text-lg group-hover:text-sky-400 transition-colors">
+                        <span class="font-sans font-bold text-primary-900 dark:text-primary-100 text-base sm:text-lg group-hover:text-sky-400 transition-colors">
                           {job.company}
                         </span>
                       )}
@@ -397,44 +397,33 @@ function cleanExcerpt(excerpt) {
       <ul class="space-y-3 text-primary-300">
         <li class="flex items-start gap-3">
           <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
-          <span>end-to-end IT ownership;</span>
+          <span>Own end to end IT infrastructure, networking, cybersecurity, compliance, and cloud operations.</span>
         </li>
         <li class="flex items-start gap-3">
           <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
-          <span>enterprise network architecture (FortiGate, VPNs, segmentation, access controls);</span>
+          <span>Architect and secure enterprise networks using FortiGate firewalls, VPNs, network segmentation, and access controls.</span>
         </li>
         <li class="flex items-start gap-3">
           <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
-          <span>AWS operations (IAM, hardening, cost optimization, availability, governance);</span>
+          <span>Lead AWS operations covering identity and access management, security hardening, cost optimization, availability, and governance.</span>
         </li>
         <li class="flex items-start gap-3">
           <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
-          <span>ISMS/compliance (risk assessments, audits, controls, remediation);</span>
+          <span>Drive ISMS and information security compliance, including risk assessments, audits, control implementation, and remediation.</span>
         </li>
         <li class="flex items-start gap-3">
           <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
-          <span>IT asset lifecycle/procurement/vendor management/SLAs/branch infrastructure;</span>
+          <span>Govern IT asset lifecycle, procurement, vendor management, SLA performance, and branch infrastructure.</span>
         </li>
         <li class="flex items-start gap-3">
           <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
-          <span>cross-functional team and vendor leadership;</span>
+          <span>Lead cross functional teams and technology partners from planning and implementation through successful delivery.</span>
         </li>
         <li class="flex items-start gap-3">
           <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
-          <span>incident response and root cause analysis.</span>
+          <span>Manage critical IT and security escalations through structured incident response, root cause analysis, and long term corrective actions.</span>
         </li>
       </ul>
-    </div>
-
-    <!-- Footer Action -->
-    <div class="mt-6 pt-4 border-t border-primary-800 flex justify-end">
-      <button
-        type="button"
-        onclick="closeSeedsModal()"
-        class="px-5 py-2.5 bg-primary-800 hover:bg-sky-500/20 text-primary-200 hover:text-sky-400 border border-primary-700 hover:border-sky-500/30 font-semibold text-sm rounded-xl transition-all cursor-pointer"
-      >
-        Close
-      </button>
     </div>
   </dialog>
 
