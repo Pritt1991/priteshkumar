@@ -199,27 +199,29 @@ function renderBlock(block) {
       if (rows.length === 0) return '';
 
       const hasHeader = block.table?.has_column_header;
-      let tableHtml = '<div class="my-6 overflow-x-auto rounded-xl border border-primary-200/60 dark:border-primary-800/60 shadow-lg"><table class="w-full text-left text-sm border-collapse bg-primary-900/20 backdrop-blur-md">';
+      let tableHtml = '<div class="my-6 overflow-x-auto rounded-xl border border-primary-200/80 dark:border-primary-800/80 shadow-xl"><table class="w-full text-left text-sm border-collapse bg-primary-50/50 dark:bg-primary-950/60 backdrop-blur-md">';
 
       rows.forEach((rowBlock, rowIndex) => {
         if (rowBlock.type !== 'table_row') return;
         const cells = rowBlock.table_row?.cells || [];
 
         if (rowIndex === 0 && hasHeader) {
-          tableHtml += '<thead class="bg-primary-100/80 dark:bg-primary-800/60 border-b border-primary-200/60 dark:border-primary-800/60 font-bold text-accent-400"><tr>';
+          tableHtml += '<thead class="bg-primary-200/80 dark:bg-primary-900/90 border-b border-primary-300/80 dark:border-primary-800/80 font-bold text-accent-600 dark:text-accent-400"><tr>';
           cells.forEach(cell => {
-            tableHtml += `<th class="p-3.5 border-r last:border-r-0 border-primary-200/40 dark:border-primary-800/40">${renderRichText(cell)}</th>`;
+            tableHtml += `<th class="p-3.5 border-r last:border-r-0 border-primary-200/60 dark:border-primary-800/60">${renderRichText(cell)}</th>`;
           });
           tableHtml += '</tr></thead><tbody>';
         } else {
           if (rowIndex === 0) tableHtml += '<tbody>';
           const isEven = rowIndex % 2 === 0;
-          const bgClass = isEven ? 'bg-primary-900/30' : 'bg-primary-900/10';
-          tableHtml += `<tr class="${bgClass} border-b last:border-b-0 border-primary-200/40 dark:border-primary-800/40 hover:bg-accent-500/5 transition-colors">`;
+          const bgClass = isEven ? 'bg-primary-100/40 dark:bg-primary-900/40' : 'bg-transparent';
+          tableHtml += `<tr class="${bgClass} border-b last:border-b-0 border-primary-200/60 dark:border-primary-800/60 hover:bg-sky-500/10 transition-colors">`;
           cells.forEach((cell, cellIndex) => {
-            const isRowHeader = cellIndex === 0 && block.table?.has_row_header;
-            const fontClass = isRowHeader ? 'font-bold text-primary-900 dark:text-primary-100' : 'text-primary-700 dark:text-primary-300';
-            tableHtml += `<td class="p-3.5 border-r last:border-r-0 border-primary-200/40 dark:border-primary-800/40 ${fontClass}">${renderRichText(cell)}</td>`;
+            const isRowHeader = cellIndex === 0 && (block.table?.has_row_header || cellIndex === 0);
+            const fontClass = isRowHeader
+              ? 'font-bold text-primary-950 dark:text-primary-100 bg-primary-200/30 dark:bg-primary-900/50'
+              : 'text-primary-800 dark:text-primary-200';
+            tableHtml += `<td class="p-3.5 border-r last:border-r-0 border-primary-200/60 dark:border-primary-800/60 ${fontClass}">${renderRichText(cell)}</td>`;
           });
           tableHtml += '</tr>';
         }
