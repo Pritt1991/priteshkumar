@@ -68,7 +68,12 @@ function cleanExcerpt(excerpt) {
   <Nav />
   <main class="flex-1">
     <!-- Hero Section (Aver Theme Pattern) -->
-    <section class="pt-20 pb-20 relative overflow-hidden bg-[#0e121e] text-white -mt-20">
+    <!-- Background Options:
+         Option A (Active): bg-gradient-to-b from-[#0f1729] to-[#1a2138] (Charcoal-Navy with depth)
+         Option B (Alternate): bg-gradient-to-br from-[#101820] via-[#16232b] to-[#0d1620] (Slate-Teal undertone)
+         Option C (Alternate): bg-gradient-to-b from-[#0a0f1d] via-[#0f172a] to-[#141c33] (Deep Royal Navy)
+    -->
+    <section class="pt-20 pb-20 relative overflow-hidden bg-gradient-to-b from-[#0f1729] to-[#1a2138] text-white -mt-20">
       <!-- Decorative Outlined Stroke Text Behind Content -->
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" aria-hidden="true">
         <span class="hero-watermark font-['Big_Shoulders_Display'] text-[15vw] font-black uppercase tracking-widest hidden sm:block text-sky-500/10 opacity-25 whitespace-nowrap">
