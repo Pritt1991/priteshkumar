@@ -22,9 +22,9 @@ export async function getArticleContent(pageId) {
       cursor = response.next_cursor;
     } while (cursor);
 
-    // Fetch child rows for table blocks
+    // Fetch child blocks for all container blocks (tables, toggles, columns)
     for (const block of blocks) {
-      if (block.has_children && block.type === 'table') {
+      if (block.has_children) {
         block.children = await getArticleContent(block.id);
       }
     }
