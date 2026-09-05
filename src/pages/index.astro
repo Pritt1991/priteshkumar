@@ -76,7 +76,7 @@ function cleanExcerpt(excerpt) {
     <section class="pt-20 pb-20 relative overflow-hidden bg-gradient-to-b from-[#0f1729] to-[#1a2138] text-white -mt-20">
       <!-- Decorative Outlined Stroke Text Behind Content -->
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" aria-hidden="true">
-        <span class="hero-watermark font-['Big_Shoulders_Display'] text-[15vw] font-black uppercase tracking-widest hidden sm:block text-sky-500/10 opacity-25 whitespace-nowrap">
+        <span id="hero-watermark" class="hero-watermark font-['Big_Shoulders_Display'] text-[15vw] font-black uppercase tracking-widest hidden sm:block text-sky-500/10 opacity-25 whitespace-nowrap will-change-transform transition-transform duration-75 ease-out">
           INFRASTRUCTURE &amp; SECURITY
         </span>
       </div>
@@ -372,10 +372,40 @@ function cleanExcerpt(excerpt) {
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .animate-fade-in-up {
+    .animate-fade-in-up,
+    .hero-watermark {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
     }
   }
 </style>
+
+<script>
+  function setupWatermarkScroll() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const watermark = document.getElementById('hero-watermark');
+    if (!watermark) return;
+
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          if (scrollY < 1200) {
+            // Shift right to left as user scrolls down
+            const moveX = scrollY * -0.35;
+            watermark.style.transform = `translate3d(${moveX}px, 0, 0)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  }
+
+  setupWatermarkScroll();
+  document.addEventListener('astro:page-load', setupWatermarkScroll);
+</script>
