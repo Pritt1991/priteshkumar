@@ -12,44 +12,91 @@ import { Server, ShieldCheck, Cloud, Activity, ClipboardCheck } from '@lucide/as
 
 const icons = [Server, ShieldCheck, Cloud, Activity, ClipboardCheck];
 
+const cardPalettes = [
+  {
+    border: 'border-t-sky-500',
+    iconText: 'text-sky-500 dark:text-sky-400',
+    iconBg: 'bg-sky-500/10 border-sky-500/20 group-hover:bg-sky-500/20',
+    hoverBorder: 'hover:border-sky-400/80 hover:shadow-sky-500/10',
+    watermark: 'text-sky-500/10 dark:text-sky-400/10 group-hover:text-sky-500/20',
+  },
+  {
+    border: 'border-t-emerald-500',
+    iconText: 'text-emerald-500 dark:text-emerald-400',
+    iconBg: 'bg-emerald-500/10 border-emerald-500/20 group-hover:bg-emerald-500/20',
+    hoverBorder: 'hover:border-emerald-400/80 hover:shadow-emerald-500/10',
+    watermark: 'text-emerald-500/10 dark:text-emerald-400/10 group-hover:text-emerald-500/20',
+  },
+  {
+    border: 'border-t-indigo-500',
+    iconText: 'text-indigo-500 dark:text-indigo-400',
+    iconBg: 'bg-indigo-500/10 border-indigo-500/20 group-hover:bg-indigo-500/20',
+    hoverBorder: 'hover:border-indigo-400/80 hover:shadow-indigo-500/10',
+    watermark: 'text-indigo-500/10 dark:text-indigo-400/10 group-hover:text-indigo-500/20',
+  },
+  {
+    border: 'border-t-amber-500',
+    iconText: 'text-amber-500 dark:text-amber-400',
+    iconBg: 'bg-amber-500/10 border-amber-500/20 group-hover:bg-amber-500/20',
+    hoverBorder: 'hover:border-amber-400/80 hover:shadow-amber-500/10',
+    watermark: 'text-amber-500/10 dark:text-amber-400/10 group-hover:text-amber-500/20',
+  },
+  {
+    border: 'border-t-purple-500',
+    iconText: 'text-purple-500 dark:text-purple-400',
+    iconBg: 'bg-purple-500/10 border-purple-500/20 group-hover:bg-purple-500/20',
+    hoverBorder: 'hover:border-purple-400/80 hover:shadow-purple-500/10',
+    watermark: 'text-purple-500/10 dark:text-purple-400/10 group-hover:text-purple-500/20',
+  },
+];
+
 const articles = await getArticles();
 const teaserArticles = articles.slice(0, 3);
 const featuredArticle = teaserArticles[0] || null;
 const latestArticles = teaserArticles.slice(1);
+
+function cleanExcerpt(excerpt) {
+  if (!excerpt) return '';
+  if (excerpt.includes('TODO') || excerpt.includes('internal note') || excerpt.includes('placeholder')) {
+    return "A practical step-by-step guide to replacing raw public IP access on FortiGate firewall management interfaces with a trusted FQDN and Let's Encrypt SSL certificate.";
+  }
+  return excerpt;
+}
 ---
 
 <Layout>
   <Nav />
   <main class="flex-1">
     <!-- Hero Section -->
-    <section class="pt-24 pb-10">
+    <section class="pt-28 pb-16 relative">
       <div class="max-w-6xl mx-auto px-6 w-full">
         <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-          <!-- Photo Container with Gradient Ring & Hover Scale -->
-          <div class="order-1 md:order-2 flex-shrink-0">
-            <div class="p-1.5 rounded-3xl bg-gradient-to-tr from-sky-500 via-cyan-400 to-blue-600 shadow-2xl shadow-sky-500/20 hover:scale-[1.02] transition-transform duration-500">
+          <!-- Photo Container with Single-Accent Ring & Ambient Glow -->
+          <div class="order-1 md:order-2 flex-shrink-0 relative group">
+            <div class="absolute -inset-4 bg-sky-500/15 dark:bg-sky-500/20 rounded-full blur-2xl -z-10 pointer-events-none group-hover:bg-sky-500/25 transition-all duration-500"></div>
+            <div class="p-1.5 rounded-3xl bg-gradient-to-tr from-sky-500 via-cyan-400 to-sky-600 shadow-2xl shadow-sky-500/20 hover:scale-[1.02] transition-transform duration-500">
               <div class="w-64 h-64 md:w-80 md:h-80 rounded-[1.25rem] overflow-hidden bg-primary-900">
                 <Image src={priteshImg} alt="Pritesh Kumar" class="w-full h-full object-cover" width={640} height={640} loading="eager" />
               </div>
             </div>
           </div>
 
-          <!-- Text Intro -->
-          <div class="order-2 md:order-1 max-w-2xl">
+          <!-- Text Intro with Motion Guard -->
+          <div class="order-2 md:order-1 max-w-2xl animate-fade-in-up motion-reduce:animate-none">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400 font-mono text-xs font-semibold uppercase tracking-wider mb-6">
               <span class="text-amber-500">⚡</span> {site.tagline}
             </div>
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-primary-900 dark:text-primary-100 leading-[1.1] mb-8">
-              I build, secure<br>and operate <span class="font-black text-[1.06em] bg-gradient-to-r from-sky-500 via-cyan-400 to-blue-500 bg-clip-text text-transparent">IT infrastructure.</span>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-primary-900 dark:text-primary-100 leading-[1.12] mb-8">
+              I build, secure<br>and operate <span class="font-black bg-gradient-to-r from-sky-500 via-cyan-400 to-sky-400 bg-clip-text text-transparent">IT infrastructure.</span>
             </h1>
             <p class="text-lg md:text-xl text-primary-600 dark:text-primary-300 leading-relaxed mb-10">
-              I'm {site.name}, an IT Infrastructure, Security and Cloud professional with 14+ years of experience working with enterprise technology environments.
+              I'm {site.name}, an IT Infrastructure, Network, Security and Cloud professional with 14+ years of experience working with enterprise technology environments.
             </p>
             <div class="flex flex-wrap items-center gap-4">
-              <a href="/blog" class="px-7 py-3.5 bg-gradient-to-r from-sky-600 via-sky-500 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 text-white font-semibold text-sm rounded-xl shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300">
+              <a href="/blog" class="px-7 py-3.5 bg-gradient-to-r from-sky-600 via-sky-500 to-cyan-500 hover:from-sky-500 hover:to-cyan-400 text-white font-semibold text-sm rounded-xl shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100">
                 Read My Articles →
               </a>
-              <a href="#about" class="px-7 py-3.5 border border-primary-300/80 dark:border-primary-700/80 hover:border-amber-400/60 bg-primary-100/50 dark:bg-primary-900/50 backdrop-blur-sm text-primary-900 dark:text-primary-100 font-semibold text-sm rounded-xl hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300">
+              <a href="#about" class="px-7 py-3.5 border border-primary-300/80 dark:border-primary-700/80 hover:border-sky-400/60 bg-primary-100/50 dark:bg-primary-900/50 backdrop-blur-sm text-primary-900 dark:text-primary-100 font-semibold text-sm rounded-xl hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100">
                 More About Me
               </a>
             </div>
@@ -59,36 +106,37 @@ const latestArticles = teaserArticles.slice(1);
     </section>
 
     <!-- Introduction Section -->
-    <section class="py-10 border-t border-primary-200/60 dark:border-primary-800/60 relative">
+    <section class="py-16 border-t border-primary-200/60 dark:border-primary-800/60 relative">
       <div class="max-w-6xl mx-auto px-6">
         <div class="max-w-4xl">
           <p class="text-2xl md:text-3xl font-light text-primary-800 dark:text-primary-200 leading-relaxed">
-            My work sits at the intersection of <span class="font-semibold bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">infrastructure, networking, security, cloud, and IT operations</span>. I like solving practical problems and making complex infrastructure understandable.
+            My work sits at the intersection of <span class="font-semibold bg-gradient-to-r from-sky-400 via-cyan-400 to-sky-400 bg-clip-text text-transparent">infrastructure, networking, security, cloud, and IT operations</span>. I like solving practical problems and making complex infrastructure understandable.
           </p>
         </div>
       </div>
     </section>
 
     <!-- Expertise & Ventures Grid ("What I Work With") -->
-    <section class="py-12 relative">
+    <section class="py-16 relative">
       <div class="max-w-6xl mx-auto px-6">
-        <div class="flex items-center gap-3 mb-8">
+        <div class="flex items-center gap-3 mb-10">
           <div class="h-px w-8 bg-sky-500"></div>
           <h2 class="text-xs font-mono font-bold text-sky-500 dark:text-sky-400 tracking-widest uppercase">What I Work With</h2>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {expertise.map((item, idx) => {
             const IconComponent = icons[idx] || Server;
+            const palette = cardPalettes[idx % cardPalettes.length];
             return (
-              <div class="relative overflow-hidden bg-primary-100/80 dark:bg-primary-900/60 border border-primary-200/60 dark:border-primary-800/60 backdrop-blur-md rounded-2xl p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-400/50 hover:shadow-xl hover:shadow-sky-500/5 group flex flex-col justify-between">
+              <div class={`relative overflow-hidden bg-primary-100/80 dark:bg-primary-900/60 border border-primary-200/60 dark:border-primary-800/60 border-t-4 ${palette.border} backdrop-blur-md rounded-2xl p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 motion-reduce:hover:translate-y-0 ${palette.hoverBorder} hover:shadow-xl group flex flex-col justify-between`}>
                 <!-- Watermark Number -->
-                <span class="absolute top-2 right-4 font-mono text-6xl font-black text-sky-500/10 dark:text-sky-400/10 select-none pointer-events-none group-hover:text-sky-500/20 transition-colors">
+                <span class={`absolute top-2 right-4 font-mono text-6xl font-black ${palette.watermark} select-none pointer-events-none transition-colors`}>
                   0{idx + 1}
                 </span>
                 <div class="relative z-10">
-                  <div class="p-2.5 rounded-xl bg-sky-500/10 border border-sky-500/20 w-max mb-4 group-hover:bg-sky-500/20 transition-colors">
-                    <IconComponent class="w-5 h-5 text-sky-600 dark:text-sky-400" />
+                  <div class={`p-3 rounded-xl ${palette.iconBg} w-max mb-4 transition-colors`}>
+                    <IconComponent class={`w-5 h-5 ${palette.iconText}`} />
                   </div>
                   <h3 class="text-xl font-bold text-primary-900 dark:text-primary-100 mb-3 group-hover:text-sky-400 transition-colors">
                     {item.title}
@@ -105,7 +153,7 @@ const latestArticles = teaserArticles.slice(1);
     </section>
 
     <!-- About + Career Timeline Section -->
-    <section id="about" class="py-12 border-t border-primary-200/60 dark:border-primary-800/60 relative">
+    <section id="about" class="py-16 border-t border-primary-200/60 dark:border-primary-800/60 relative">
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
           <!-- About -->
@@ -128,14 +176,14 @@ const latestArticles = teaserArticles.slice(1);
             </div>
             
             <div class="bg-primary-100/80 dark:bg-primary-900/60 border border-primary-200/60 dark:border-primary-800/60 backdrop-blur-md rounded-2xl p-6 shadow-sm">
-              <div class="border-l-2 border-sky-500/30 ml-2 pl-6 space-y-6 relative">
+              <div class="border-l-2 border-sky-500/30 ml-2.5 pl-6 space-y-6 relative">
                 {career.map((job, idx) => (
                   <div class="relative group">
                     <!-- Node Icon -->
                     <div class:list={[
                       'absolute -left-[31px] top-1.5 h-3.5 w-3.5 rounded-full transition-transform duration-300 group-hover:scale-125',
                       idx === 0
-                        ? 'bg-sky-500 ring-4 ring-sky-500/20 shadow-sm shadow-sky-500 animate-pulse'
+                        ? 'bg-sky-500 ring-4 ring-sky-500/20 shadow-sm shadow-sky-500 animate-pulse motion-reduce:animate-none'
                         : 'bg-primary-400 dark:bg-primary-700'
                     ]}></div>
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
@@ -156,7 +204,7 @@ const latestArticles = teaserArticles.slice(1);
     </section>
 
     <!-- Blog Teaser Section -->
-    <section class="py-12 border-t border-primary-200/60 dark:border-primary-800/60 relative">
+    <section class="py-16 border-t border-primary-200/60 dark:border-primary-800/60 relative">
       <div class="max-w-6xl mx-auto px-6">
         <div class="flex items-center justify-between mb-8">
           <div class="flex items-center gap-3">
@@ -193,7 +241,7 @@ const latestArticles = teaserArticles.slice(1);
                   <h3 class="text-lg font-bold text-primary-900 dark:text-primary-100 group-hover:text-sky-400 transition-colors leading-snug">
                     {featuredArticle.title}
                   </h3>
-                  <p class="text-sm text-primary-600 dark:text-primary-400 mt-2 line-clamp-2">{featuredArticle.excerpt}</p>
+                  <p class="text-sm text-primary-600 dark:text-primary-400 mt-2 line-clamp-2">{cleanExcerpt(featuredArticle.excerpt)}</p>
                 </div>
               </article>
             )}
@@ -218,7 +266,7 @@ const latestArticles = teaserArticles.slice(1);
                   <h3 class="text-lg font-bold text-primary-900 dark:text-primary-100 group-hover:text-sky-400 transition-colors leading-snug">
                     {article.title}
                   </h3>
-                  <p class="text-sm text-primary-600 dark:text-primary-400 mt-2 line-clamp-2">{article.excerpt}</p>
+                  <p class="text-sm text-primary-600 dark:text-primary-400 mt-2 line-clamp-2">{cleanExcerpt(article.excerpt)}</p>
                 </div>
               </article>
             ))}
@@ -228,10 +276,10 @@ const latestArticles = teaserArticles.slice(1);
     </section>
 
     <!-- Contact Section -->
-    <section class="py-12 border-t border-primary-200/60 dark:border-primary-800/60 relative">
+    <section class="py-16 border-t border-primary-200/60 dark:border-primary-800/60 relative">
       <div class="max-w-6xl mx-auto px-6">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-8 text-primary-900 dark:text-primary-100">
-          Let's Talk <span class="bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">Technology.</span>
+          Let's Talk <span class="bg-gradient-to-r from-sky-400 via-cyan-400 to-sky-400 bg-clip-text text-transparent">Technology.</span>
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -289,3 +337,26 @@ const latestArticles = teaserArticles.slice(1);
   </main>
   <Footer />
 </Layout>
+
+<style is:global>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
