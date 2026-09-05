@@ -19,10 +19,10 @@ const latest = allArticles.slice(1);
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/10 border border-accent-500/20 text-accent-400 font-mono text-xs font-semibold uppercase tracking-wider mb-4">
         <span>📰</span> Engineering Insights
       </div>
-      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900 dark:text-primary-100 mb-4">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900 dark:text-primary-100 mb-4">
         Technical <span class="bg-gradient-to-r from-accent-400 via-cyan-400 to-accent-600 bg-clip-text text-transparent">Articles & Writing</span>
       </h1>
-      <p class="text-lg text-primary-600 dark:text-primary-400">Practical Technology. Infrastructure. Security. Cloud.</p>
+      <p class="font-sans text-base sm:text-lg text-primary-600 dark:text-primary-400 font-normal leading-relaxed">Practical Technology. Infrastructure. Security. Cloud.</p>
     </div>
 
     {allArticles.length === 0 ? (
@@ -96,10 +96,10 @@ const latest = allArticles.slice(1);
                     {formatDate(featured.publishDate)}
                   </span>
                 </div>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-primary-900 dark:text-primary-100 mb-4 group-hover:text-accent-400 transition-colors leading-snug">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary-900 dark:text-primary-100 mb-4 group-hover:text-accent-400 transition-colors leading-snug">
                   {featured.title}
                 </h2>
-                <p class="text-primary-600 dark:text-primary-300 leading-relaxed mb-6 line-clamp-3">{featured.excerpt}</p>
+                <p class="text-sm sm:text-base text-primary-600 dark:text-primary-300 leading-relaxed mb-6 line-clamp-3">{featured.excerpt}</p>
                 <div class="inline-flex items-center gap-2 font-mono text-xs font-bold text-accent-400 group-hover:translate-x-1 transition-transform">
                   Read Article <span>→</span>
                 </div>
@@ -142,7 +142,7 @@ const latest = allArticles.slice(1);
                         {formatDate(article.publishDate)}
                       </span>
                     </div>
-                    <h3 class="text-xl font-bold text-primary-900 dark:text-primary-100 mb-3 group-hover:text-accent-400 transition-colors leading-snug">
+                    <h3 class="text-lg sm:text-xl font-bold text-primary-900 dark:text-primary-100 mb-3 group-hover:text-accent-400 transition-colors leading-snug">
                       {article.title}
                     </h3>
                     <p class="text-primary-600 dark:text-primary-400 text-sm leading-relaxed line-clamp-3 mb-4">{article.excerpt}</p>

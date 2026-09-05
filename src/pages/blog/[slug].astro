@@ -330,11 +330,11 @@ if (inList) {
           </div>
         )}
         
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary-900 dark:text-primary-100 leading-[1.25] mb-6">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900 dark:text-primary-100 leading-tight mb-6">
           {article.title}
         </h1>
         
-        <p class="text-lg md:text-xl text-primary-600 dark:text-primary-300 leading-relaxed mb-6 font-light">{article.excerpt}</p>
+        <p class="font-sans text-base sm:text-lg md:text-xl text-primary-600 dark:text-primary-300 leading-relaxed mb-6 font-normal">{article.excerpt}</p>
         
         <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-primary-500 dark:text-primary-400 pt-4 border-t border-primary-200/60 dark:border-primary-800/60">
           <span class="text-primary-900 dark:text-primary-100 font-semibold">{site.author.name}</span>
@@ -360,7 +360,7 @@ if (inList) {
       <!-- Table of Contents disabled -->
 
       <!-- Content -->
-      <div class="prose prose-neutral dark:prose-invert max-w-none leading-relaxed" set:html={html} />
+      <div class="prose prose-neutral dark:prose-invert max-w-none text-sm sm:text-base leading-relaxed" set:html={html} />
 
       <!-- Series Navigation -->
       {seriesArticles.length > 1 && (
