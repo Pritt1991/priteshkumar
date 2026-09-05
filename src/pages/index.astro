@@ -8,7 +8,7 @@ import { formatDate } from '../lib/utils.js';
 
 import { Image } from 'astro:assets';
 import priteshImg from '../pritesh.jpg';
-import { Server, ShieldCheck, Cloud, Activity, ClipboardCheck, Sparkles } from '@lucide/astro';
+import { Server, ShieldCheck, Cloud, Activity, ClipboardCheck, Sparkles, X, Info } from '@lucide/astro';
 
 const icons = [Server, ShieldCheck, Cloud, Activity, ClipboardCheck];
 
@@ -200,9 +200,23 @@ function cleanExcerpt(excerpt) {
                         : 'bg-primary-400 dark:bg-primary-700'
                     ]}></div>
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                      <span class="font-bold text-primary-900 dark:text-primary-100 text-lg group-hover:text-sky-400 transition-colors">
-                        {job.company}
-                      </span>
+                      {idx === 0 ? (
+                        <button
+                          type="button"
+                          id="seeds-fincap-trigger"
+                          onclick="openSeedsModal(this)"
+                          class="font-bold text-primary-900 dark:text-primary-100 text-lg group-hover:text-sky-400 hover:text-sky-400 hover:underline decoration-sky-400/50 transition-colors flex items-center gap-1.5 text-left focus:outline-none focus:ring-2 focus:ring-sky-400/50 rounded-md cursor-pointer"
+                          aria-haspopup="dialog"
+                          aria-controls="seeds-fincap-modal"
+                        >
+                          <span>{job.company}</span>
+                          <Info class="w-4 h-4 text-sky-400 opacity-80 group-hover:opacity-100 flex-shrink-0" />
+                        </button>
+                      ) : (
+                        <span class="font-bold text-primary-900 dark:text-primary-100 text-lg group-hover:text-sky-400 transition-colors">
+                          {job.company}
+                        </span>
+                      )}
                       <span class="font-mono text-xs text-sky-600 dark:text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2.5 py-0.5 rounded-full w-max">
                         {job.years}
                       </span>
@@ -348,6 +362,82 @@ function cleanExcerpt(excerpt) {
       </div>
     </section>
   </main>
+
+  <!-- Seeds Fincap Career Details Modal -->
+  <dialog
+    id="seeds-fincap-modal"
+    class="w-[92vw] max-w-2xl max-h-[85vh] overflow-y-auto bg-primary-900/95 dark:bg-primary-950/95 text-primary-100 border border-primary-700/80 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl backdrop:bg-slate-950/80 backdrop:backdrop-blur-sm m-auto"
+  >
+    <!-- Header -->
+    <div class="flex items-start justify-between gap-4 pb-4 mb-4 border-b border-primary-800">
+      <div>
+        <span class="font-mono text-xs font-semibold text-sky-400 uppercase tracking-wider bg-sky-500/10 border border-sky-500/20 px-2.5 py-0.5 rounded-full inline-block mb-2">
+          Seeds Fincap Private Limited · 2021–Present
+        </span>
+        <h3 class="text-xl sm:text-2xl font-bold text-white leading-snug">
+          IT Infrastructure, Cybersecurity &amp; Cloud Leadership
+        </h3>
+      </div>
+      <button
+        type="button"
+        onclick="closeSeedsModal()"
+        class="p-2 text-primary-400 hover:text-sky-400 hover:bg-sky-500/10 rounded-lg transition-colors flex-shrink-0 cursor-pointer"
+        aria-label="Close modal"
+      >
+        <X class="w-5 h-5" />
+      </button>
+    </div>
+
+    <!-- Body Content -->
+    <div class="space-y-4 text-sm sm:text-base text-primary-200 leading-relaxed">
+      <p class="text-primary-300 font-medium">
+        I lead the organization's IT infrastructure, cybersecurity, compliance, and cloud operations, with responsibility for building secure, reliable, and scalable technology environments.
+      </p>
+
+      <ul class="space-y-3 text-primary-300">
+        <li class="flex items-start gap-3">
+          <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
+          <span>end-to-end IT ownership;</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
+          <span>enterprise network architecture (FortiGate, VPNs, segmentation, access controls);</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
+          <span>AWS operations (IAM, hardening, cost optimization, availability, governance);</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
+          <span>ISMS/compliance (risk assessments, audits, controls, remediation);</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
+          <span>IT asset lifecycle/procurement/vendor management/SLAs/branch infrastructure;</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
+          <span>cross-functional team and vendor leadership;</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-sky-400 font-bold text-base leading-none mt-1">▸</span>
+          <span>incident response and root cause analysis.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Footer Action -->
+    <div class="mt-6 pt-4 border-t border-primary-800 flex justify-end">
+      <button
+        type="button"
+        onclick="closeSeedsModal()"
+        class="px-5 py-2.5 bg-primary-800 hover:bg-sky-500/20 text-primary-200 hover:text-sky-400 border border-primary-700 hover:border-sky-500/30 font-semibold text-sm rounded-xl transition-all cursor-pointer"
+      >
+        Close
+      </button>
+    </div>
+  </dialog>
+
   <Footer />
 </Layout>
 
@@ -408,4 +498,52 @@ function cleanExcerpt(excerpt) {
 
   setupWatermarkScroll();
   document.addEventListener('astro:page-load', setupWatermarkScroll);
+</script>
+
+<script is:inline>
+  let lastActiveElement = null;
+
+  function openSeedsModal(triggerEl) {
+    lastActiveElement = triggerEl || document.activeElement;
+    const modal = document.getElementById('seeds-fincap-modal');
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+
+  function closeSeedsModal() {
+    const modal = document.getElementById('seeds-fincap-modal');
+    if (modal && typeof modal.close === 'function') {
+      modal.close();
+    }
+    if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+      lastActiveElement.focus();
+    }
+  }
+
+  function bindSeedsModalEvents() {
+    const modal = document.getElementById('seeds-fincap-modal');
+    if (modal && !modal.dataset.bound) {
+      modal.dataset.bound = 'true';
+      // Backdrop click listener: native dialog backdrop click target is the dialog element itself
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeSeedsModal();
+        }
+      });
+      // Restore focus on native close (e.g. Esc key)
+      modal.addEventListener('close', () => {
+        if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+          lastActiveElement.focus();
+        }
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindSeedsModalEvents);
+  } else {
+    bindSeedsModalEvents();
+  }
+  document.addEventListener('astro:page-load', bindSeedsModalEvents);
 </script>
