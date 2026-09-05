@@ -7,10 +7,10 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-4 z-50 max-w-6xl mx-4 sm:mx-auto px-6 rounded-2xl backdrop-blur-xl bg-primary-50/80 dark:bg-primary-900/80 border border-primary-200/50 dark:border-primary-800/50 shadow-lg shadow-black/5 transition-all duration-300">
-  <div class="h-14 flex items-center justify-between">
+<header class="sticky top-4 z-50 max-w-max mx-auto px-4 sm:px-6 rounded-full backdrop-blur-xl bg-primary-900/90 border border-primary-800/80 shadow-2xl transition-all duration-300">
+  <div class="h-12 sm:h-14 flex items-center gap-3 sm:gap-6">
     <!-- Status Dot Indicator (Logo mark) -->
-    <a href="/" class="flex items-center gap-2 p-1.5 rounded-full hover:bg-primary-200/50 dark:hover:bg-primary-800/50 transition-colors" aria-label="About Me">
+    <a href="/" class="flex items-center gap-2 p-1.5 rounded-full hover:bg-primary-800/60 transition-colors" aria-label="About Me">
       <span class="relative flex h-3 w-3">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
@@ -18,31 +18,34 @@ const currentPath = Astro.url.pathname;
     </a>
 
     <!-- Navigation Links [About Me, Blog, Theme Toggle] -->
-    <div class="flex items-center gap-4 sm:gap-6 text-sm font-medium">
-      {navLinks.map(link => (
-        <a
-          href={link.href}
-          class:list={[
-            'transition-colors hover:text-primary-900 dark:hover:text-primary-100 px-3.5 py-1.5 rounded-lg',
-            currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
-              ? 'text-primary-900 dark:text-primary-100 bg-primary-200/60 dark:bg-primary-800/60 font-semibold'
-              : 'text-primary-500 dark:text-primary-400'
-          ]}
-        >
-          {link.label}
-        </a>
-      ))}
+    <div class="flex items-center gap-1.5 sm:gap-3 text-xs sm:text-sm font-medium">
+      {navLinks.map(link => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class:list={[
+              'transition-all duration-200 px-3.5 py-1.5 rounded-full',
+              isActive
+                ? 'text-sky-400 bg-sky-500/20 border border-sky-500/30 font-semibold'
+                : 'text-primary-300 hover:text-white hover:bg-primary-800/60'
+            ]}
+          >
+            {link.label}
+          </a>
+        );
+      })}
 
       <!-- Dark Mode Toggle Button -->
       <button
         id="theme-toggle"
         aria-label="Toggle dark mode"
-        class="p-2 rounded-xl text-primary-500 dark:text-primary-400 hover:text-primary-900 dark:hover:text-primary-100 hover:bg-primary-200/50 dark:hover:bg-primary-800/50 transition-all duration-300 transform active:scale-95 group"
+        class="p-1.5 sm:p-2 rounded-full text-primary-300 hover:text-white hover:bg-primary-800/60 transition-all duration-300 transform active:scale-95 group ml-1"
       >
-        <svg id="sun-icon" class="w-5 h-5 hidden dark:block transition-transform duration-500 ease-in-out group-hover:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg id="sun-icon" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block transition-transform duration-500 ease-in-out group-hover:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
         </svg>
-        <svg id="moon-icon" class="w-5 h-5 block dark:hidden transition-transform duration-500 ease-in-out group-hover:-rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg id="moon-icon" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden transition-transform duration-500 ease-in-out group-hover:-rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 24.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
         </svg>
       </button>
